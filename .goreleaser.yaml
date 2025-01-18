@@ -33,10 +33,13 @@ archives:
   - format: tar.gz
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
+      {{ .ProjectName }}_{{ .Version }}_
+      {{- if eq .Os "darwin" }}macOS
+      {{- else if eq .Os "ios" }}iOS
+      {{- else }}{{ .Os }}{{ end }}_
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
+      {{- else if eq .Arch "all" }}universal
       {{- else }}{{ .Arch }}{{ end }}
     # use zip for windows archives
     format_overrides:
@@ -78,10 +81,6 @@ changelog:
 universal_binaries:
   - replace: true
 
-publishers:
-  - name: cargo
-    cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --no-verify --allow-dirty"
-
 brews:
   - repository:
       owner: blacktop
@@ -94,8 +93,12 @@ brews:
     # test: |
     #   system "#{bin}/bindiff"
 
+publishers:
+  - name: cargo
+    cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --allow-dirty"
+
 release:
-  footer: >-
+  footer: |
     ### Summary
     **Full Changelog**: https://github.com/blacktop/bindiff-rs/compare/{{ .PreviousTag }}...{{ .Tag }}
     ## What to do next?
