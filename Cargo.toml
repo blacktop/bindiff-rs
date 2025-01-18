@@ -1,0 +1,22 @@
+[package]
+name = "bindiff"
+version = "0.1.0"
+edition = "2021"
+authors = ["blacktop <blacktop@noreply.github.com>"]
+description = "Idiomatic bindings to IDA SDK"
+repository = "https://github.com/blacktop/bindiff-rs"
+license = "MIT"
+readme = "README.md"
+build = "build.rs"
+
+
+[dependencies]
+anyhow = "1.0.95"
+# Protobuf parsing library
+prost = "0.13.4"
+# SQLite database library
+chrono = "0.4.39"
+rusqlite = { version = "0.32.1", features = ["bundled", "chrono"] }
+
+[build-dependencies]
+prost-build = "0.13.4"
