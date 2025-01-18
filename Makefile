@@ -1,3 +1,9 @@
+.PHONY: build-deps
+build-deps:
+	@echo "🔨 Installing Build Dependencies"
+	brew install caarlos0/tap/svu
+	cargo install --locked cargo-set-version
+
 .PHONY: bump
 bump:
 	@echo "🚀 Bumping Version"
@@ -6,7 +12,7 @@ bump:
 
 .PHONY: release-dry
 release-dry:
-	goreleaser build --clean --timeout 60m --snapshot --single-target
+	goreleaser build --clean --timeout 60m --snapshot --skip=validate
 
 .PHONY: release
 release: bump
