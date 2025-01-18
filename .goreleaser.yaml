@@ -89,7 +89,6 @@ brews:
     homepage: "https://github.com/blacktop/bindiff-rs"
     description: "Rust bindiff wrapper"
     license: MIT
-    name: bindiff_rs
     # test: |
     #   system "#{bin}/bindiff"
 
