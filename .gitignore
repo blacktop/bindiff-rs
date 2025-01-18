@@ -27,6 +27,8 @@ Cargo.lock
 # build/test files
 *.proto
 tests/*.BinDiff
+tests/*.BinExport
+
 # Added by goreleaser init:
 dist/
 .intentionally-empty-file.o

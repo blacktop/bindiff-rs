@@ -1,6 +1,6 @@
 [package]
 name = "bindiff-rs"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["blacktop <blacktop@noreply.github.com>"]
 description = "Rust bindings to BinDiff"
@@ -8,7 +8,7 @@ repository = "https://github.com/blacktop/bindiff-rs"
 license = "MIT"
 readme = "README.md"
 build = "build.rs"
-exclude = ["src/binexport/binexport2.proto"]
+# exclude = ["src/binexport/binexport2.proto"]
 
 [dependencies]
 anyhow = "1.0.95"
