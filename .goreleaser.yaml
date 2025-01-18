@@ -1,0 +1,104 @@
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+project_name: bindiff-rs
+
+before:
+  hooks:
+    # if you don't do these things before calling goreleaser, it might be a
+    # good idea to do them here:
+    - rustup default stable
+    - cargo install --locked cargo-zigbuild
+    - cargo fetch --locked
+
+builds:
+  - builder: rust
+    flags:
+      - --release
+    targets:
+      - x86_64-unknown-linux-gnu
+      - x86_64-apple-darwin
+      - x86_64-pc-windows-gnu
+      - aarch64-unknown-linux-gnu
+      - aarch64-apple-darwin
+
+archives:
+  - format: tar.gz
+    # this name template makes the OS and Arch compatible with the results of `uname`.
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+    # use zip for windows archives
+    format_overrides:
+      - goos: windows
+        format: zip
+
+changelog:
+  sort: asc
+  use: github
+  groups:
+    - title: Dependency updates
+      regexp: '^.*?(.+)\(deps\)!?:.+$'
+      order: 300
+    - title: "New Features"
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 100
+    - title: "Security updates"
+      regexp: '^.*?sec(\(.+\))??!?:.+$'
+      order: 150
+    - title: "Bug fixes"
+      regexp: '^.*?(fix|refactor)(\(.+\))??!?:.+$'
+      order: 200
+    - title: "Documentation updates"
+      regexp: ^.*?docs?(\(.+\))??!?:.+$
+      order: 400
+    - title: "Build process updates"
+      regexp: ^.*?(build|ci)(\(.+\))??!?:.+$
+      order: 400
+    - title: Other work
+      order: 9999
+  filters:
+    include:
+      - "^feat.*"
+      - "^fix.*"
+      - "^chore.*"
+      - "^sec.*"
+      - "^(doc|docs).*"
+
+universal_binaries:
+  - replace: true
+
+publishers:
+  - name: cargo
+    cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --no-verify"
+
+brews:
+  - repository:
+      owner: blacktop
+      name: homebrew-tap
+    directory: Formula
+    homepage: "https://github.com/blacktop/bindiff-rs"
+    description: "Rust bindiff wrapper"
+    license: MIT
+    name: bindiff_rs
+    # test: |
+    #   system "#{bin}/bindiff"
+
+release:
+  footer: >-
+    ### Summary
+    **Full Changelog**: https://github.com/blacktop/bindiff-rs/compare/{{ .PreviousTag }}...{{ .Tag }}
+    ## What to do next?
+    - Follow us on [Twitter](https://twitter.com/blacktop__)
+    - Follow us on [Mastodon](https://mastodon.social/@blacktop)
+    - Follow us on [BlueSky](https://bsky.app/profile/blacktop.bsky.social)

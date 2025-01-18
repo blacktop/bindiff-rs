@@ -1,3 +1,17 @@
+.PHONY: bump
+bump:
+	@echo "🚀 Bumping Version"
+	git tag $(shell svu patch)
+	git push --tags
+
+.PHONY: release-dry
+release-dry:
+	goreleaser build --clean --timeout 60m --snapshot --single-target
+
+.PHONY: release
+release:
+	goreleaser --clean --timeout 60m --skip=validate
+
 .PHONY: test
 test:
 	cargo test 

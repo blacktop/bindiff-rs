@@ -1,7 +1,7 @@
 use bindiff_rs::BinDiff;
-
 fn main() -> anyhow::Result<()> {
-    let input_path = std::env::args().nth(1)
+    let input_path = std::env::args()
+        .nth(1)
         .ok_or_else(|| anyhow::anyhow!("Please provide a path to a BinDiff file"))?;
     let bd = BinDiff::open(&input_path)?;
 
