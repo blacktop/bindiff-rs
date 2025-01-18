@@ -1,4 +1,4 @@
-use bindiff::BinDiff;
+use bindiff_rs::BinDiff;
 
 fn main() -> anyhow::Result<()> {
     let input_path = std::env::args().nth(1)
