@@ -1,4 +1,3 @@
-# bindiff-rs
 <p align="center">
   <a href="https://github.com/blacktop/bindiff-rs"><img alt="Logo" src="https://github.com/blacktop/bindiff-rs/raw/main/logo.png" height="300" /></a>
   <h1 align="center">bindiff-rs</h1>
@@ -6,6 +5,8 @@
   <p align="center">
     <a href="https://github.com/blacktop/bindiff-rs/actions" alt="Actions">
           <img src="https://github.com/blacktop/bindiff-rs/actions/workflows/rust.yml/badge.svg" /></a>
+    <a href="https://crates.io/crates/bindiff-rs" alt="Downloads">
+          <img src="https://img.shields.io/crates/d/bindiff-rs" /></a>
     <a href="https://crates.io/crates/bindiff-rs" alt="Docs">
           <img src="https://img.shields.io/crates/v/bindiff-rs" /></a>
     <a href="http://doge.mit-license.org" alt="LICENSE">
