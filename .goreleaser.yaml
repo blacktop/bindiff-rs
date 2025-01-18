@@ -80,7 +80,7 @@ universal_binaries:
 
 publishers:
   - name: cargo
-    cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --no-verify"
+    cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --no-verify --allow-dirty"
 
 brews:
   - repository:

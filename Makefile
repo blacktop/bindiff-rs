@@ -9,7 +9,7 @@ release-dry:
 	goreleaser build --clean --timeout 60m --snapshot --single-target
 
 .PHONY: release
-release:
+release: bump
 	goreleaser --clean --timeout 60m --skip=validate
 
 .PHONY: test
