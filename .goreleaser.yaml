@@ -17,7 +17,6 @@ before:
     - rustup default stable
     - cargo install --locked cargo-zigbuild
     - cargo fetch --locked
-    - cargo-set-version set-version {{ .Version }}
 
 builds:
   - builder: rust

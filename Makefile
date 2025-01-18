@@ -7,6 +7,10 @@ build-deps:
 .PHONY: bump
 bump:
 	@echo "🚀 Bumping Version"
+	cargo-set-version set-version $(shell svu patch --strip-prefix)
+	git add Cargo.toml
+	git commit -m "Bump version to $(shell svu patch --strip-prefix)"
+	git push
 	git tag $(shell svu patch)
 	git push --tags
 
