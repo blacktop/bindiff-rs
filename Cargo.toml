@@ -12,9 +12,7 @@ exclude = ["src/binexport/binexport2.proto"]
 
 [dependencies]
 anyhow = "1.0.95"
-# Protobuf parsing library
 prost = "0.13.4"
-# SQLite database library
 chrono = "0.4.39"
 rusqlite = { version = "0.32.1", features = ["bundled", "chrono"] }
 
