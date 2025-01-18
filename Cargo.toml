@@ -8,7 +8,7 @@ repository = "https://github.com/blacktop/bindiff-rs"
 license = "MIT"
 readme = "README.md"
 build = "build.rs"
-
+exclude = ["src/binexport/binexport2.proto"]
 
 [dependencies]
 anyhow = "1.0.95"
