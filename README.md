@@ -5,9 +5,9 @@
   <h4><p align="center">Rust library to interface with BinDiff</p></h4>
   <p align="center">
     <a href="https://github.com/blacktop/bindiff-rs/actions" alt="Actions">
-          <img src="https://github.com/blacktop/bindiff-rs/actions/workflows/go.yml/badge.svg" /></a>
-    <a href="https://pkg.go.dev/github.com/blacktop/bindiff-rs" alt="Docs">
-          <img src="https://pkg.go.dev/badge/github.com/blacktop/bindiff-rs.svg" /></a>
+          <img src="https://github.com/blacktop/bindiff-rs/actions/workflows/rust.yml/badge.svg" /></a>
+    <a href="https://crates.io/crates/bindiff-rs" alt="Docs">
+          <img src="https://img.shields.io/crates/v/bindiff-rs" /></a>
     <a href="http://doge.mit-license.org" alt="LICENSE">
           <img src="https://img.shields.io/:license-mit-blue.svg" /></a>
 </p>

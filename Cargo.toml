@@ -1,9 +1,9 @@
 [package]
-name = "bindiff"
+name = "bindiff-rs"
 version = "0.1.0"
 edition = "2021"
 authors = ["blacktop <blacktop@noreply.github.com>"]
-description = "Idiomatic bindings to IDA SDK"
+description = "Rust bindings to BinDiff"
 repository = "https://github.com/blacktop/bindiff-rs"
 license = "MIT"
 readme = "README.md"

@@ -14,9 +14,13 @@ run:
 examples:
 	cargo run --example bindiff
 
+.PHONY: publish-test
+publish-test:
+	cargo publish --dry-run --allow-dirty
+
 .PHONY: publish
 publish:
-	cargo publish --dry-run
+	cargo publish --allow-dirty
 
 .PHONY: clean
 clean:
