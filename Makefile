@@ -1,6 +1,10 @@
 .PHONY: test
 test:
-	cargo test
+	cargo test 
+
+.PHONY: test-verbose
+test-verbose:
+	cargo test -- --nocapture
 
 .PHONY: run
 run:

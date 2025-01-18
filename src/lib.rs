@@ -110,30 +110,59 @@ pub enum FunctionAlgorithm {
     Other(String),
 }
 
+impl std::fmt::Display for FunctionAlgorithm {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            FunctionAlgorithm::None => write!(f, "none"),
+            FunctionAlgorithm::NameHashMatching => write!(f, "name hash matching"),
+            FunctionAlgorithm::HashMatching => write!(f, "hash matching"),
+            FunctionAlgorithm::EdgesFlowgraphMdIndex => write!(f, "edges flowgraph MD index"),
+            FunctionAlgorithm::EdgesCallgraphMdIndex => write!(f, "edges callgraph MD index"),
+            FunctionAlgorithm::MdIndexMatchingFlowgraphTopDown => write!(f, "MD index matching (flowgraph MD index, top down)"),
+            FunctionAlgorithm::MdIndexMatchingFlowgraphBottomUp => write!(f, "MD index matching (flowgraph MD index, bottom up)"),
+            FunctionAlgorithm::PrimeSignatureMatching => write!(f, "signature matching"),
+            FunctionAlgorithm::MdIndexMatchingCallGraphTopDown => write!(f, "MD index matching (callGraph MD index, top down)"),
+            FunctionAlgorithm::MdIndexMatchingCallGraphBottomUp => write!(f, "MD index matching (callGraph MD index, bottom up)"),
+            FunctionAlgorithm::RelaxedMdIndexMatching => write!(f, "MD index matching"),
+            FunctionAlgorithm::InstructionCount => write!(f, "instruction count"),
+            FunctionAlgorithm::AddressSequence => write!(f, "address sequence"),
+            FunctionAlgorithm::StringReferences => write!(f, "string references"),
+            FunctionAlgorithm::LoopCountMatching => write!(f, "loop count matching"),
+            FunctionAlgorithm::CallSequenceMatchingExact => write!(f, "call sequence matching(exact)"),
+            FunctionAlgorithm::CallSequenceMatchingTopology => write!(f, "call sequence matching(topology)"),
+            FunctionAlgorithm::CallSequenceMatchingSequence => write!(f, "call sequence matching(sequence)"),
+            FunctionAlgorithm::CallReferenceMatching => write!(f, "call references matching"),
+            FunctionAlgorithm::Manual => write!(f, "manual"),
+            FunctionAlgorithm::Other(s) => write!(f, "other({})", s),
+        }
+    }
+}
+
 impl FromSql for FunctionAlgorithm {
     fn column_result(value: ValueRef<'_>) -> FromSqlResult<Self> {
-        match value.as_str()? {
-            "None" => Ok(FunctionAlgorithm::None),
-            "NameHashMatching" => Ok(FunctionAlgorithm::NameHashMatching),
-            "HashMatching" => Ok(FunctionAlgorithm::HashMatching),
-            "EdgesFlowgraphMdIndex" => Ok(FunctionAlgorithm::EdgesFlowgraphMdIndex),
-            "EdgesCallgraphMdIndex" => Ok(FunctionAlgorithm::EdgesCallgraphMdIndex),
-            "MdIndexMatchingFlowgraphTopDown" => Ok(FunctionAlgorithm::MdIndexMatchingFlowgraphTopDown),
-            "MdIndexMatchingFlowgraphBottomUp" => Ok(FunctionAlgorithm::MdIndexMatchingFlowgraphBottomUp),
-            "PrimeSignatureMatching" => Ok(FunctionAlgorithm::PrimeSignatureMatching),
-            "MdIndexMatchingCallGraphTopDown" => Ok(FunctionAlgorithm::MdIndexMatchingCallGraphTopDown),
-            "MdIndexMatchingCallGraphBottomUp" => Ok(FunctionAlgorithm::MdIndexMatchingCallGraphBottomUp),
-            "RelaxedMdIndexMatching" => Ok(FunctionAlgorithm::RelaxedMdIndexMatching),
-            "InstructionCount" => Ok(FunctionAlgorithm::InstructionCount),
-            "AddressSequence" => Ok(FunctionAlgorithm::AddressSequence),
-            "StringReferences" => Ok(FunctionAlgorithm::StringReferences),
-            "LoopCountMatching" => Ok(FunctionAlgorithm::LoopCountMatching),
-            "CallSequenceMatchingExact" => Ok(FunctionAlgorithm::CallSequenceMatchingExact),
-            "CallSequenceMatchingTopology" => Ok(FunctionAlgorithm::CallSequenceMatchingTopology),
-            "CallSequenceMatchingSequence" => Ok(FunctionAlgorithm::CallSequenceMatchingSequence),
-            "CallReferenceMatching" => Ok(FunctionAlgorithm::CallReferenceMatching),
-            "Manual" => Ok(FunctionAlgorithm::Manual),
-            unknown => Ok(FunctionAlgorithm::Other(unknown.to_string())),
+        let algorithm_id: i32 = value.as_i64()? as i32;
+        match algorithm_id {
+            0 => Ok(FunctionAlgorithm::None),
+            1 => Ok(FunctionAlgorithm::NameHashMatching),
+            2 => Ok(FunctionAlgorithm::HashMatching),
+            3 => Ok(FunctionAlgorithm::EdgesFlowgraphMdIndex),
+            4 => Ok(FunctionAlgorithm::EdgesCallgraphMdIndex),
+            5 => Ok(FunctionAlgorithm::MdIndexMatchingFlowgraphTopDown),
+            6 => Ok(FunctionAlgorithm::MdIndexMatchingFlowgraphBottomUp),
+            7 => Ok(FunctionAlgorithm::PrimeSignatureMatching),
+            8 => Ok(FunctionAlgorithm::MdIndexMatchingCallGraphTopDown),
+            9 => Ok(FunctionAlgorithm::MdIndexMatchingCallGraphBottomUp),
+            10 => Ok(FunctionAlgorithm::RelaxedMdIndexMatching),
+            11 => Ok(FunctionAlgorithm::InstructionCount),
+            12 => Ok(FunctionAlgorithm::AddressSequence),
+            13 => Ok(FunctionAlgorithm::StringReferences),
+            14 => Ok(FunctionAlgorithm::LoopCountMatching),
+            15 => Ok(FunctionAlgorithm::CallSequenceMatchingExact),
+            16 => Ok(FunctionAlgorithm::CallSequenceMatchingTopology),
+            17 => Ok(FunctionAlgorithm::CallSequenceMatchingSequence),
+            18 => Ok(FunctionAlgorithm::CallReferenceMatching),
+            19 => Ok(FunctionAlgorithm::Manual),
+            other => Ok(FunctionAlgorithm::Other(other.to_string())),
         }
     }
 }
@@ -148,8 +177,7 @@ pub struct FunctionMatch {
     pub similarity: f64,
     pub confidence: f64,
     pub flags: i64,
-    pub algorithm: i32,
-    // pub algorithm: FunctionAlgorithm,
+    pub algorithm: FunctionAlgorithm,
     pub evaluate: bool,
     pub comment_supported: bool,
     pub basic_blocks: i64,
@@ -160,25 +188,7 @@ pub struct FunctionMatch {
 impl std::fmt::Display for FunctionMatch {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if self.name1 != self.name2 {
-            write!(f, "FUNCTION MATCH:\n  \
-                id:                {}\n  \
-                address1:          {}\n  \
-                name1:             {}\n  \
-                address2:          {}\n  \
-                name2:             {}\n  \
-                similarity:        {:.2}\n  \
-                confidence:        {:.2}\n  \
-                flags:             {}\n  \
-                algorithm:         {}\n  \
-                evaluate:          {}\n  \
-                comment_supported: {}\n  \
-                basic_blocks:      {}\n  \
-                edges:             {}\n  \
-                instructions:      {}\n",
-                self.id, self.address1, self.name1, self.address2, self.name2, 
-                self.similarity, self.confidence, self.flags, self.algorithm, 
-                self.evaluate, self.comment_supported, self.basic_blocks, 
-                self.edges, self.instructions)
+            write!(f, "{} -> {}\tsimilarity: {:.2}, confidence: {:.2}, algorithm: {}", self.name1, self.name2, self.similarity, self.confidence, self.algorithm)
         } else {
             write!(f, "{}:\tsimilarity: {:.2}, confidence: {:.2}", self.name1, self.similarity, self.confidence)
         }
@@ -213,15 +223,79 @@ pub enum BasicBlockAlgorithm {
     Other(String),
 }
 
+impl std::fmt::Display for BasicBlockAlgorithm {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BasicBlockAlgorithm::None => write!(f, "none"),
+            BasicBlockAlgorithm::EdgesPrimeProduct => write!(f, "edges prime product"),
+            BasicBlockAlgorithm::HashMatchingFourInstMin => write!(f, "hash matching (4 instructions minimum)"),
+            BasicBlockAlgorithm::PrimeMatchingFourInstMin => write!(f, "prime matching (4 instructions minimum)"),
+            BasicBlockAlgorithm::CallReferenceMatching => write!(f, "call reference matching"),
+            BasicBlockAlgorithm::StringReferencesMatching => write!(f, "string reference matching"),
+            BasicBlockAlgorithm::EdgesMdIndexTopDown => write!(f, "edges MD index (top down)"),
+            BasicBlockAlgorithm::MdIndexMatchingTopDown => write!(f, "MD index matching (top down)"),
+            BasicBlockAlgorithm::EdgesMdIndexBottomUp => write!(f, "edges MD index (bottom up)"),
+            BasicBlockAlgorithm::MdIndexMatchingBottomUp => write!(f, "MD index matching (bottom up)"),
+            BasicBlockAlgorithm::RelaxedMdIndexMatching => write!(f, "relaxed MD index matching"),
+            BasicBlockAlgorithm::PrimeMatchingNoInstMin => write!(f, "prime matching (0 instructions minimum)"),
+            BasicBlockAlgorithm::EdgesLengauerTarjanDominated => write!(f, "edges Lengauer Tarjan dominated"),
+            BasicBlockAlgorithm::LoopEntryMatching => write!(f, "loop entry matching"),
+            BasicBlockAlgorithm::SelfLoopMatching => write!(f, "self loop matching"),
+            BasicBlockAlgorithm::EntryPointMatching => write!(f, "entry point matching"),
+            BasicBlockAlgorithm::ExitPointMatching => write!(f, "exit point matching"),
+            BasicBlockAlgorithm::InstructionCountMatching => write!(f, "instruction count matching"),
+            BasicBlockAlgorithm::JumpSequenceMatching => write!(f, "jump sequence matching"),
+            BasicBlockAlgorithm::PropagationSizeOne => write!(f, "propagation (size==1)"),
+            BasicBlockAlgorithm::Manual => write!(f, "manual"),
+            BasicBlockAlgorithm::Other(s) => write!(f, "other({})", s),
+        }
+    }
+}
+
+impl FromSql for BasicBlockAlgorithm {
+    fn column_result(value: ValueRef<'_>) -> FromSqlResult<Self> {
+        let algorithm_id: i32 = value.as_i64()? as i32;
+        match algorithm_id {
+            0 => Ok(BasicBlockAlgorithm::None),
+            1 => Ok(BasicBlockAlgorithm::EdgesPrimeProduct),
+            2 => Ok(BasicBlockAlgorithm::HashMatchingFourInstMin),
+            3 => Ok(BasicBlockAlgorithm::PrimeMatchingFourInstMin),
+            4 => Ok(BasicBlockAlgorithm::CallReferenceMatching),
+            5 => Ok(BasicBlockAlgorithm::StringReferencesMatching),
+            6 => Ok(BasicBlockAlgorithm::EdgesMdIndexTopDown),
+            7 => Ok(BasicBlockAlgorithm::MdIndexMatchingTopDown),
+            8 => Ok(BasicBlockAlgorithm::EdgesMdIndexBottomUp),
+            9 => Ok(BasicBlockAlgorithm::MdIndexMatchingBottomUp),
+            10 => Ok(BasicBlockAlgorithm::RelaxedMdIndexMatching),
+            11 => Ok(BasicBlockAlgorithm::PrimeMatchingNoInstMin),
+            12 => Ok(BasicBlockAlgorithm::EdgesLengauerTarjanDominated),
+            13 => Ok(BasicBlockAlgorithm::LoopEntryMatching),
+            14 => Ok(BasicBlockAlgorithm::SelfLoopMatching),
+            15 => Ok(BasicBlockAlgorithm::EntryPointMatching),
+            16 => Ok(BasicBlockAlgorithm::ExitPointMatching),
+            17 => Ok(BasicBlockAlgorithm::InstructionCountMatching),
+            18 => Ok(BasicBlockAlgorithm::JumpSequenceMatching),
+            19 => Ok(BasicBlockAlgorithm::PropagationSizeOne),
+            20 => Ok(BasicBlockAlgorithm::Manual),
+            other => Ok(BasicBlockAlgorithm::Other(other.to_string())),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct BasicBlockMatch {
     pub id: i64,
     pub function_id: i64,
     pub address1: i64,
     pub address2: i64,
-    pub algorithm: i32,
-    // pub algorithm: BasicBlockAlgorithm,
+    pub algorithm: BasicBlockAlgorithm,
     pub evaluate: bool,
+}
+
+impl std::fmt::Display for BasicBlockMatch {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:#x} -> {:#x} ({})", self.address1, self.address2, self.algorithm)
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -229,6 +303,12 @@ pub struct Instruction {
     pub id: i64,
     pub address1: i64,
     pub address2: i64,
+}
+
+impl std::fmt::Display for Instruction {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} -> {}", self.address1, self.address2)
+    }
 }
 
 /// Struct to handle SQLite database operations
@@ -306,7 +386,7 @@ impl BinDiff {
             "SELECT * FROM function"
         ).context("Failed to prepare function statement")?;
 
-        let matches = stmt.query_map(params![], |row| {
+        let matches = stmt.query_map(params![], |row| {    
             Ok(FunctionMatch {
                 id: row.get(0)?,
                 address1: row.get(1)?,
@@ -415,14 +495,18 @@ mod tests {
 
         let basic_block_matches = db.read_basic_block_matches()?;
         assert_eq!(basic_block_matches.len(), count);
-        // println!("Basic Block Matches: {:?}", basic_block_matches);
+        // for basic_block_match in basic_block_matches {
+        //     println!("{}", basic_block_match);
+        // }
         
         let count = db.count_instruction_matches()?;
         println!("Total Instruction Matches: {}", count);
 
         let instruction_matches = db.read_instruction_matches()?;
         assert_eq!(instruction_matches.len(), count);
-        // println!("Instruction Matches: {:?}", instruction_matches);
+        // for instruction_match in instruction_matches {
+        //     println!("{}", instruction_match);
+        // }
 
         db.close()?;
 
