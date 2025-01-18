@@ -1,6 +1,6 @@
 [package]
 name = "bindiff-rs"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 authors = ["blacktop <blacktop@noreply.github.com>"]
 description = "Rust bindings to BinDiff"
