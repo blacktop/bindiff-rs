@@ -31,5 +31,7 @@ fn main() -> anyhow::Result<()> {
     //     println!("{:#?}", instruction_match);
     // }
 
+    bd.close()?;
+
     Ok(())
 }
