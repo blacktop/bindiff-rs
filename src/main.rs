@@ -1,5 +1,6 @@
 use calm_io::*;
 use bindiff_rs::BinDiff;
+use scopeguard::guard;
 
 #[pipefail]
 fn main() -> std::io::Result<()> {
@@ -9,6 +10,10 @@ fn main() -> std::io::Result<()> {
     
     let bd = BinDiff::open(&input_path)
         .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
+
+    let bd = guard(bd, |bd| {
+        bd.close().unwrap_or_else(|e| eprintln!("Error closing database: {}", e));
+    });
 
     // Read file
     let file = bd.read_file()
@@ -26,9 +31,6 @@ fn main() -> std::io::Result<()> {
     for func_match in func_matches {
         stdoutln!("{}", func_match)?;
     }
-
-    bd.close()
-        .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
 
     Ok(())
 }

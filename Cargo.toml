@@ -15,6 +15,7 @@ prost = "0.13.4"
 chrono = "0.4.39"
 rusqlite = { version = "0.32.1", features = ["bundled", "chrono"] }
 calm_io = "0.1.1"
+scopeguard = "1.2.0"
 
 [build-dependencies]
 prost-build = "0.13.4"
