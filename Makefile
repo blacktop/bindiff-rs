@@ -43,7 +43,7 @@ publish-test: ## Test publishing the crate to crates.io
 	cargo publish --dry-run --allow-dirty
 
 .PHONY: publish
-publish: ## Publish the crate to crates.io
+publish: release ## Publish the crate to crates.io
 	cargo publish --allow-dirty
 
 .PHONY: clean
