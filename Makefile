@@ -32,11 +32,11 @@ test-verbose:
 
 .PHONY: run
 run:
-	cargo run --example bindiff --release
+	cargo run --release tests/kernel.release_vs_kernel.release.BinDiff
 
-.PHONY: examples
-examples:
-	cargo run --example bindiff
+.PHONY: example
+example:
+	cargo run --example=binexport tests/kernel.release.t6020.BinExport
 
 .PHONY: publish-test
 publish-test:

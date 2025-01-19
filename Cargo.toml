@@ -5,10 +5,9 @@ edition = "2021"
 authors = ["blacktop <blacktop@noreply.github.com>"]
 description = "Rust bindings to BinDiff"
 repository = "https://github.com/blacktop/bindiff-rs"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 readme = "README.md"
 build = "build.rs"
-# exclude = ["src/binexport/binexport2.proto"]
 
 [dependencies]
 anyhow = "1.0.95"

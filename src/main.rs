@@ -16,7 +16,7 @@ fn main() -> anyhow::Result<()> {
     // Read function matches
     let func_matches = bd.read_function_matches()?;
     for func_match in func_matches {
-        println!("{:#?}", func_match);
+        println!("{}", func_match);
     }
 
     // // Read basic blocks
