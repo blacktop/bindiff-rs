@@ -34,6 +34,20 @@ fn main() -> anyhow::Result<()> {
 }
 ```
 
+## Install `bindiff-rs` binary
+
+Via [homebrew](https://brew.sh)
+
+```sh
+brew install blacktop/tap/bindiff-rs
+```
+
+Via `cargo`
+
+```sh
+cargo install bindiff-rs
+```
+
 ## License
 
 MIT Copyright (c) 2025 **blacktop**

@@ -92,9 +92,9 @@ brews:
     # test: |
     #   system "#{bin}/bindiff"
 
-publishers:
-  - name: cargo
-    cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --allow-dirty"
+# publishers:
+#   - name: cargo
+#     cmd: "cargo publish {{ if .IsSnapshot }}--dry-run{{ end }} --quiet --allow-dirty"
 
 release:
   footer: |
