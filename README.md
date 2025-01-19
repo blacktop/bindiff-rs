@@ -50,8 +50,8 @@ cargo install bindiff-rs
 
 ## Run `bindiff-rs`
 
-```sh
-bindiff-rs <path-to-bindiff-file>
+```bash
+❯ bindiff-rs path/to/BinDiff
 ```
 ```bash
 FILE:
