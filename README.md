@@ -135,6 +135,14 @@ Dump the BinDiff file function matches in JSON format
 ]
 ```
 
+Get a function match's similarity score
+
+```bash
+❯ bindiff-rs path/to/BinDiff --json | jq '.[] | select(.name1 == "memset_s") | .similarity'
+
+"1.0"
+```
+
 ## License
 
 MIT Copyright (c) 2025 **blacktop**
