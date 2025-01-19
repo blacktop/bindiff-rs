@@ -14,6 +14,7 @@ anyhow = "1.0.95"
 prost = "0.13.4"
 chrono = "0.4.39"
 rusqlite = { version = "0.32.1", features = ["bundled", "chrono"] }
+calm_io = "0.1.1"
 
 [build-dependencies]
 prost-build = "0.13.4"

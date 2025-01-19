@@ -48,6 +48,55 @@ Via `cargo`
 cargo install bindiff-rs
 ```
 
+## Run `bindiff-rs`
+
+```sh
+bindiff-rs <path-to-bindiff-file>
+```
+```bash
+FILE:
+  id:               1
+  filename:         kernel.release
+  exe_filename:     kernel.release.t6020
+  hash:             8a9f5d9305cec0a85bbaae3288ef3a5732bda406edcf20aa6edd9352fb555de0
+  functions:        22140
+  lib_functions:    0
+  calls:            229914
+  basic_blocks:     1037258
+  lib_basic_blocks: 0
+  edges:            1546378
+  lib_edges:        0
+  instructions:     4958934
+  lib_instructions: 0
+
+METADATA:
+  version:      BinDiff 8 (@568181968, Sep 25 2023)
+  file1:        1
+  file2:        2
+  description:
+  created:      2025-01-12 23:51:57
+  modified:     2025-01-12 23:51:57
+  similarity:   0.99
+  confidence:   0.99
+
+memset_s:       similarity: 1.00, confidence: 0.99
+timingsafe_bcmp:        similarity: 1.00, confidence: 0.99
+cc_clear:       similarity: 1.00, confidence: 0.99
+cc_disable_dit: similarity: 1.00, confidence: 0.97
+ccdigest_init:  similarity: 1.00, confidence: 0.99
+ccdigest_update:        similarity: 1.00, confidence: 0.99
+cchmac: similarity: 1.00, confidence: 0.99
+cchmac_init:    similarity: 1.00, confidence: 0.99
+cchmac_update:  similarity: 1.00, confidence: 0.99
+cchmac_final:   similarity: 1.00, confidence: 0.99
+ccdigest_final_64be:    similarity: 1.00, confidence: 0.99
+_ovbcopy:       similarity: 1.00, confidence: 0.99
+_memmove:       similarity: 1.00, confidence: 0.99
+_bzero: similarity: 1.00, confidence: 0.99
+_memset:        similarity: 1.00, confidence: 0.99
+<SNIP>
+```
+
 ## License
 
 MIT Copyright (c) 2025 **blacktop**
