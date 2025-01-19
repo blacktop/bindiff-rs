@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/blacktop/bindiff-rs"><img alt="Logo" src="https://github.com/blacktop/bindiff-rs/raw/main/logo.png" height="400" /></a>
+  <a href="https://github.com/blacktop/bindiff-rs"><img alt="Logo" src="https://github.com/blacktop/bindiff-rs/raw/main/logo.webp" height="400" /></a>
   <h1 align="center">bindiff-rs</h1>
   <h4><p align="center">Rust library to interface with BinDiff</p></h4>
   <p align="center">
