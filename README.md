@@ -50,8 +50,10 @@ cargo install bindiff-rs
 
 ## Run `bindiff-rs`
 
+Dump the BinDiff file metadata
+
 ```bash
-❯ bindiff-rs path/to/BinDiff
+❯ bindiff-rs path/to/BinDiff --info
 ```
 ```bash
 FILE:
@@ -78,7 +80,15 @@ METADATA:
   modified:     2025-01-12 23:51:57
   similarity:   0.99
   confidence:   0.99
+```
 
+Dump the BinDiff file function matches
+
+```bash
+❯ bindiff-rs path/to/BinDiff
+```
+
+```bash
 memset_s:       similarity: 1.00, confidence: 0.99
 timingsafe_bcmp:        similarity: 1.00, confidence: 0.99
 cc_clear:       similarity: 1.00, confidence: 0.99
@@ -95,6 +105,34 @@ _memmove:       similarity: 1.00, confidence: 0.99
 _bzero: similarity: 1.00, confidence: 0.99
 _memset:        similarity: 1.00, confidence: 0.99
 <SNIP>
+```
+
+Dump the BinDiff file function matches in JSON format
+
+```bash
+❯ bindiff-rs path/to/BinDiff --json
+```
+
+```json
+[
+  {
+    "id": 1,
+    "address1": -2198902980608,
+    "name1": "memset_s",
+    "address2": -2198902980608,
+    "name2": "memset_s",
+    "similarity": 1.0,
+    "confidence": 0.9933071490757153,
+    "flags": 0,
+    "algorithm": "NameHashMatching",
+    "evaluate": false,
+    "comment_supported": false,
+    "basic_blocks": 6,
+    "edges": 7,
+    "instructions": 21
+  },
+  <SNIP>
+]
 ```
 
 ## License

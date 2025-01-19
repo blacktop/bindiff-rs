@@ -3,13 +3,14 @@ use chrono;
 use prost::Message;
 use rusqlite::types::{FromSql, FromSqlResult, ValueRef};
 use rusqlite::{params, Connection};
+use serde::{Deserialize, Serialize};
 use std::path::Path;
 
 pub mod binexport {
     include!(concat!(env!("OUT_DIR"), "/binexport.rs"));
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct File {
     pub id: i64,
     pub filename: String,
@@ -61,14 +62,14 @@ impl std::fmt::Display for File {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Metadata {
     pub version: String,
     pub file1: i64,
     pub file2: i64,
     pub description: String,
-    pub created: chrono::DateTime<chrono::Local>,
-    pub modified: chrono::DateTime<chrono::Local>,
+    pub created: chrono::DateTime<chrono::Utc>,
+    pub modified: chrono::DateTime<chrono::Utc>,
     pub similarity: f64,
     pub confidence: f64,
 }
@@ -99,7 +100,7 @@ impl std::fmt::Display for Metadata {
 }
 
 /// Enum representing the different function matching algorithms used in BinDiff
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum FunctionAlgorithm {
     None,
     NameHashMatching,
@@ -196,7 +197,7 @@ impl FromSql for FunctionAlgorithm {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FunctionMatch {
     pub id: i64,
     pub address1: i64,
@@ -233,7 +234,7 @@ impl std::fmt::Display for FunctionMatch {
 }
 
 /// Enum representing the different basic block matching algorithms used in BinDiff
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum BasicBlockAlgorithm {
     None,
     EdgesPrimeProduct,
@@ -333,7 +334,7 @@ impl FromSql for BasicBlockAlgorithm {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BasicBlockMatch {
     pub id: i64,
     pub function_id: i64,
@@ -353,7 +354,7 @@ impl std::fmt::Display for BasicBlockMatch {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Instruction {
     pub id: i64,
     pub address1: i64,

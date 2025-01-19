@@ -12,10 +12,12 @@ build = "build.rs"
 [dependencies]
 anyhow = "1.0.95"
 prost = "0.13.4"
-chrono = "0.4.39"
+chrono = { version = "0.4.39", features = ["serde"] }
 rusqlite = { version = "0.32.1", features = ["bundled", "chrono"] }
 calm_io = "0.1.1"
 scopeguard = "1.2.0"
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.136"
 
 [build-dependencies]
 prost-build = "0.13.4"
